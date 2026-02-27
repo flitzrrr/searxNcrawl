@@ -367,7 +367,12 @@ class TestCliBranches:
                 mock_exc.assert_called_once()
 
     def test_main_keyboardinterrupt_paths(self):
-        with patch("crawler.cli._parse_capture_auth_args", return_value=SimpleNamespace(verbose=False)):
+        with patch(
+            "crawler.cli._parse_crawl_args",
+            return_value=SimpleNamespace(
+                verbose=False, command="capture-auth", capture_auth=True
+            ),
+        ):
             with patch(
                 "crawler.cli.asyncio.run",
                 side_effect=_close_coro_and_raise(KeyboardInterrupt()),
